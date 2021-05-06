@@ -5,7 +5,7 @@ ARG BUILD_DATE
 ARG VCS_REF
 ARG VCS_URL
 
-RUN apk add -U --no-cache git bash imagemagick zip sed && \
+RUN apk add --no-cache git imagemagick zip sed && \
     sed -i "s#root:x:0:0:root:/root:/bin/ash#root:x:0:0:root:/root:/bin/bash#g" /etc/passwd && \
     git clone https://github.com/ashafaei/pdf2pptx.git
 
