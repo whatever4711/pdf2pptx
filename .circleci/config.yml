@@ -5,12 +5,36 @@ description: |
   Install/configure docker with buildx to
   cross-compile docker images and deploy them
 
+commands:
+  init_buildx:
+    parameters:
+      context:
+        description: "BuildX Context"
+        type: string
+        default: "xbuilder"
+    steps:
+      - run:
+          name: Prepare Docker buildx
+          command: |
+            docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+            docker context create << parameters.context >>
+            docker buildx create << parameters.context >> --name << parameters.context >> --use
+            docker buildx inspect --bootstrap
+
+  install_dependencies:
+    parameters:
+      apk_packages:
+        description: "Additional needed packages for the build"
+        type: string
+        default: "make"
+    steps:
+      - run:
+          name: "Install << parameters.apk_packages >> "
+          command: |
+            apk add --no-cache << parameters.apk_packages >>
+
 jobs:
   buildx:
-    parameters:
-      version:
-        default: 0.5.1
-        type: string
     working_directory: ~/docker-pdf2pptx
     docker:
       - image: drpsychick/dind-buildx:latest
@@ -18,19 +42,8 @@ jobs:
       - checkout
       - setup_remote_docker:
           version: 20.10.2
-      - run:
-          name: Install make
-          command: |
-            apk add --no-cache make
-      - run:
-          name: Prepare Docker buildx
-          command: |
-            docker version
-            docker buildx version
-            docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-            docker context create xbuilder
-            docker buildx create xbuilder --name xbuilder --use
-            docker buildx inspect --bootstrap
+      - install_dependencies
+      - init_buildx
       - run: make build
 
 workflows:
