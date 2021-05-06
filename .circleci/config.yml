@@ -17,7 +17,7 @@ jobs:
       - run:
           name: Install docker buildx
           command: |
-            apk add --no-cache curl make
+            apk add --no-cache curl make git
             mkdir -p ~/.docker/cli-plugins
             baseUrl="https://github.com/docker/buildx/releases/download"
             fileName="buildx-v<< parameters.version >>.linux-amd64"
