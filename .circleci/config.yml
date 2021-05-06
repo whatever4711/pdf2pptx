@@ -7,6 +7,10 @@ description: |
 
 jobs:
   buildx:
+    parameters:
+      version:
+        default: 0.5.1
+        type: string
     working_directory: ~/docker-pdf2pptx
     docker:
       - image: docker:dind
