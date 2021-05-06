@@ -9,7 +9,7 @@ jobs:
   buildx:
     working_directory: ~/docker-pdf2pptx
     docker:
-      image: docker:dind
+      - image: docker:dind
     steps:
       - checkout
       - setup_remote_docker:
