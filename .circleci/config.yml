@@ -8,7 +8,7 @@ description: |
 commands:
   init_buildx:
     parameters:
-      context:
+      builder:
         description: "BuildX Context"
         type: string
         default: "xbuilder"
@@ -17,8 +17,8 @@ commands:
           name: Prepare Docker buildx
           command: |
             docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-            docker context create << parameters.context >>
-            docker buildx create << parameters.context >> --name << parameters.context >> --use
+            docker buildx rm << parameters.builder >>
+            docker buildx create << parameters.builder >> --driver docker-container --use
             docker buildx inspect --bootstrap
 
   install_dependencies:
