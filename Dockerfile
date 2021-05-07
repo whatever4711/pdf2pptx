@@ -22,7 +22,7 @@ CMD ["/pdf2pptx/test.pdf"]
 
 LABEL de.uniba.ktr.prometheus.version=$VERSION \
       de.uniba.ktr.prometheus.name="PDF2PPTX" \
-      de.uniba.ktr.prometheus.docker.cmd="docker run -v $PDF_DIR:/pdf whatever4711/pdf2pptx your.pdf" \
+      de.uniba.ktr.prometheus.docker.cmd="docker run -v \$PWD:/pdf whatever4711/pdf2pptx your.pdf" \
       de.uniba.ktr.prometheus.vendor="Marcel Grossmann" \
       de.uniba.ktr.prometheus.architecture=$TARGETPLATFORM \
       de.uniba.ktr.prometheus.vcs-ref=$VCS_REF \
