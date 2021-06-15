@@ -12,9 +12,9 @@ RUN apk add --no-cache bash && \
 
 ENV PATH="/pdf2pptx:$PATH"
 
-WORKDIR pdf
+WORKDIR /pdf
 
-VOLUME pdf
+VOLUME /pdf
 
 ENTRYPOINT ["pdf2pptx.sh"]
 
